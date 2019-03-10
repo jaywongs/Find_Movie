@@ -1,5 +1,5 @@
 package com.jay.mapper;
-
+import com.jay.po.Movie;
 import com.jay.po.Topdefaultmovies;
 import com.jay.po.TopdefaultmoviesExample;
 import org.apache.ibatis.annotations.Param;
@@ -28,4 +28,7 @@ public interface TopdefaultmoviesMapper {
     int updateByPrimaryKeySelective(Topdefaultmovies record);
 
     int updateByPrimaryKey(Topdefaultmovies record);
+
+    List<Movie> selectRegDefaultMovie();
+
 }

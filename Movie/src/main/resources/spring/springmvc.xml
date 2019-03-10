@@ -7,14 +7,19 @@
         http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.0.xsd">
 
+        <!-- 配置Controller扫描 -->
         <context:component-scan base-package="com.jay.controller" />
 
+        <!-- 配置注解驱动 -->
         <mvc:annotation-driven />
-    
-        <mvc:resources mapping="/assets/**" location="/assets/" />
 
-        <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-                <property name="prefix" value="/WEB-INF/jsp/"/>
+        <!-- 对静态资源放行  -->
+        <mvc:resources location="/assets/" mapping="/assets/**"/>
+
+        <!-- 视图解释器 -->
+        <bean
+                class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+                <property name="prefix" value="/WEB-INF/jsp/" />
                 <property name="suffix" value=".jsp" />
         </bean>
 </beans>

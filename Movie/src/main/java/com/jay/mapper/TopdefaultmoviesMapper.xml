@@ -1,6 +1,23 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.jay.mapper.TopdefaultmoviesMapper">
+  <resultMap id="BaseMovieResultMap" type="com.jay.po.Movie">
+    <constructor>
+      <idArg column="movieid" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="moviename" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="showyear" javaType="java.util.Date" jdbcType="DATE" />
+      <arg column="nation" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="director" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="leadactors" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="screenwriter" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="picture" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="averating" javaType="java.lang.Double" jdbcType="DOUBLE" />
+      <arg column="numrating" javaType="java.lang.Integer" jdbcType="INTEGER" />
+      <arg column="description" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="typelist" javaType="java.lang.String" jdbcType="VARCHAR" />
+      <arg column="backpost" javaType="java.lang.String" jdbcType="VARCHAR" />
+    </constructor>
+  </resultMap>
   <resultMap id="BaseResultMap" type="com.jay.po.Topdefaultmovies">
     <constructor>
       <idArg column="id" javaType="java.lang.Integer" jdbcType="INTEGER" />
@@ -180,4 +197,8 @@
       moviename = #{moviename,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <select id="selectRegDefaultMovie" resultMap="BaseMovieResultMap">
+    SELECT  * FROM topdefaultmovies t,movie m WHERE t.movieid=m.movieid limit 10;
+  </select>
 </mapper>

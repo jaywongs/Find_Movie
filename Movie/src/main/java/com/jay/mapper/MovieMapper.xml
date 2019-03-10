@@ -337,4 +337,9 @@
       backpost = #{backpost,jdbcType=VARCHAR}
     where movieid = #{movieid,jdbcType=INTEGER}
   </update>
+  <!--选取默认电影-->
+  <select id="selectTopDefaultMovie" resultMap="BaseResultMap">
+    SELECT * FROM topdefaultmovies t, movie m WHERE t.movieid = m.movieid limit #{limit};
+  </select>
+
 </mapper>
