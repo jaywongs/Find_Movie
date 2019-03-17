@@ -102,7 +102,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jay.po.User">
+  <insert id="insert" parameterType="com.jay.po.User" useGeneratedKeys="true" keyProperty="userid">
     insert into user (userid, username, password, 
       registertime, lastlogintime, email
       )

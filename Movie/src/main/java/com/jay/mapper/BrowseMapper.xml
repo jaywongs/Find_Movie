@@ -195,4 +195,19 @@
       browsetime = #{browsetime,jdbcType=TIMESTAMP}
     where browseid = #{browseid,jdbcType=INTEGER}
   </update>
+  <insert id="insertuserfavourtemovie" parameterType="com.jay.po.SelectQuery">
+    <if test="movieLimit==1">
+      update browse set movieids=concat(movieids,#{sort}) where userid =#{category};
+      INSERT INTO browse(userid, movieids,browsetime)
+      SELECT #{category},#{sort},NULL
+      FROM DUAL
+      WHERE NOT EXISTS (select movieids from browse where userid =#{category});
+    </if>
+    <if test="movieLimit==0">
+      update  browse  set  movieids=replace(movieids,#{sort},'') where userid =#{category};
+    </if>
+  </insert>
+  <select id="booluserunlikedmovie" resultType="java.lang.Integer">
+    select count(*) from browse where userid = #{0} and movieids like "%,"#{1}"%.";
+  </select>
 </mapper>

@@ -341,5 +341,16 @@
   <select id="selectTopDefaultMovie" resultMap="BaseResultMap">
     SELECT * FROM topdefaultmovies t, movie m WHERE t.movieid = m.movieid limit #{limit};
   </select>
-
+  
+  <!--根据分类选取-->
+  <select id="selectByCategory" parameterType="com.jay.po.SelectQuery" resultMap="BaseResultMap">
+    <if test="category == 0">
+      select * from movie order by ${sort} desc
+      LIMIT #{movieLimit, jdbcType=INTEGER},20;
+    </if>
+    <if test="category != 0">
+      select * from movie m, movieCategory mc where m.movieid = mc.movieid and mc.categoryid = #{category,jdbcType=INTEGER} order by ${sort} desc
+      LIMIT #{movieLimit, jdbcType=INTEGER},20;
+    </if>
+  </select>
 </mapper>

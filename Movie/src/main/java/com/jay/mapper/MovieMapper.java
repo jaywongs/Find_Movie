@@ -2,6 +2,7 @@ package com.jay.mapper;
 
 import com.jay.po.Movie;
 import com.jay.po.MovieExample;
+import com.jay.po.SelectQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -18,6 +19,8 @@ public interface MovieMapper {
     int insertSelective(Movie record);
 
     List<Movie> selectByExample(MovieExample example);
+
+    List<Movie> selectByCategory(SelectQuery query);
 
     Movie selectByPrimaryKey(Integer movieid);
 

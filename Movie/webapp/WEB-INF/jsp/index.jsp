@@ -17,7 +17,7 @@
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
   <title>
-    梦的6次方
+    电影小站
   </title>
   <script src="/assets/js/jquery.js"></script>
   <script src="/assets/js/bootstrap.min.js"></script>

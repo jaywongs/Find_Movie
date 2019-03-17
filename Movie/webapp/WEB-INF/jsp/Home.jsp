@@ -11,7 +11,7 @@
 <html>
 <head>
     <title>
-        基于Spark推荐的电影站
+        基于Spark推荐的电影小站
     </title>
     <script src="/assets/js/jquery.js"></script>
     <script src="/assets/js/bootstrap.min.js"></script>

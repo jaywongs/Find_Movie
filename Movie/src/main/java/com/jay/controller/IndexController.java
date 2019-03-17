@@ -2,19 +2,21 @@ package com.jay.controller;
 
 import com.jay.common.E3Result;
 import com.jay.common.JsonUtils;
-import com.jay.po.Movie;
-import com.jay.po.User;
+import com.jay.po.*;
+import com.jay.service.CategoryService;
 import com.jay.service.MovieService;
-import com.jay.service.RegisterService;
+import com.jay.service.StarService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import javax.servlet.http.HttpServletRequest;
-import java.net.URLDecoder;
-import java.net.URLEncoder;
+
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -25,12 +27,16 @@ import java.util.Map;
 @Controller
 public class IndexController {
 
+
+    @Autowired
+    private StarService starService;
+
     @Autowired
     private MovieService movieService;
 
     @Autowired
-    private RegisterService registerService;
-
+    private CategoryService categoryService;
+    //主页
     @RequestMapping("/")
     public String showHomePage(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
@@ -49,12 +55,135 @@ public class IndexController {
     }
 
 
-    @RequestMapping("/customer/checkBox/{paramName}/{paraEmail}/{type}")
-    @ResponseBody
-    public E3Result checkDataBoth(@PathVariable String paramName, @PathVariable String paramEmail, @PathVariable Integer type){
-        try {
-            String str = URLDecoder.decode(paramName, "UTF-8");
-            E3Result e3Result = registerService.
-        }
+    //选电影界面
+    @RequestMapping("/index")
+    public String showIndex(HttpServletRequest request) {
+        E3Result allCategory = categoryService.getAllCategory();
+        List<Category> list1 = (List<Category>) allCategory.getData();
+
+        //获取所有电影数据
+        Integer categoryId = 0;
+        SelectQuery query = new SelectQuery();
+        query.setCategoryId(categoryId);
+        query.setMovieLimit(0);
+        query.setSort("numrating");
+        E3Result allMovie = movieService.SortMoiveByCategory(query);
+        List<Movie> list2 = (List<Movie>) allMovie.getData();
+        //设置session
+        request.getSession().setAttribute("category", list1);
+        request.getSession().setAttribute("movie", list2);
+
+        return "index";
     }
+
+
+    //电影详情传值
+    @RequestMapping("/Customer/Description")
+    @ResponseBody
+    public String GoMoiveDescription(HttpServletRequest request) {
+        request.getSession().removeAttribute("booluserunlikedmovie");
+
+        //获取用户点击movieid
+        int movieid = Integer.parseInt(request.getParameter("id"));
+        E3Result e3Result1 = movieService.SortMovieByMovieId(movieid);
+        //获取电影详情
+        Movie movie = (Movie) e3Result1.getData();
+        User user = (User) request.getSession().getAttribute("user");
+
+        //判断用户是否登录以及对这部电影的喜爱
+        if (user != null) {
+            E3Result e3Result2 = starService.SortReviewByUseridandMovieid(user.getUserid(), movieid);
+            Review review = (Review)e3Result2.getData();
+            request.getSession().setAttribute("userstar", review);
+
+            //判断登录用户是否喜欢该电影
+            int booluserlikedmovie = movieService.booluserunlikedmovie(user.getUserid(), request.getParameter("id"));
+            request.getSession().setAttribute("booluserlikedmovie", booluserlikedmovie);
+        }else {
+            Review review = null;
+            request.getSession().setAttribute("userstar", review);
+        }
+
+        //设置session
+        request.getSession().setAttribute("moviedescription", movie);
+
+        return "success";
+    }
+
+
+    //电影详情界面
+    @RequestMapping("/MovieDescription")
+    public String showMovieDescription(HttpServletRequest request){
+        return "MovieDescription";
+    }
+
+
+    //选电影界面加载更多按钮(通过类型标签，时序标签以及现有页面呈现的电影数目三个参数查询)
+
+
+
+    //选择排序电影（类型和时序）
+
+
+    //电影评星
+    @RequestMapping(value = "/getstar", method = RequestMethod.POST)
+    @ResponseBody
+    public String getstar(HttpServletRequest request) throws ParseException {
+        int userid = Integer.parseInt(request.getParameter("userid"));
+        int movieid = Integer.parseInt(request.getParameter("movieid"));
+        Double star = Double.parseDouble(request.getParameter("star"));
+        if (star >= 3.5) {
+            //todo
+        }
+        String str = request.getParameter("time");
+        SimpleDateFormat formate = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        Date time = formate.parse(str);
+        Review review = new Review();
+        review.setUserid(userid);
+        review.setMovieid(movieid);
+        review.setStar(star);
+        review.setReviewtime(time);
+
+        //入库
+        starService.setStar(review);
+        review = null;
+        E3Result e3Result = starService.SortReviewByUseridandMovieid(userid, movieid);
+        review = (Review)e3Result.getData();
+
+        //立即读取影评显示于前端
+        request.getSession().setAttribute("userstar", review);
+        return "评分成功！";
+
+    }
+
+
+
+    //电影详情界面点击相似电影
+
+
+    //电影详情界面用户喜欢电影（,id. 格式写入数据库，不存在则插入，存在则更新）
+    @RequestMapping(value = "/likedmovie", method = RequestMethod.POST)
+    @ResponseBody
+    public String likemovie(HttpServletRequest request) {
+        String movieids=","+request.getParameter("movieid")+".";
+        int userid = Integer.parseInt(request.getParameter("userid"));
+        int boollike = Integer.parseInt(request.getParameter("boollike"));
+        SelectQuery query = new SelectQuery();
+        query.setCategoryId(userid);
+        query.setMovieLimit(boollike);
+        query.setSort(movieids);
+        movieService.InsertUserFavouriteMoive(query);
+        return "success";
+    }
+
+    //点击个人中心按钮
+
+
+    //个人中心按钮
+
+
+    //搜索电影
+
+}
+
 

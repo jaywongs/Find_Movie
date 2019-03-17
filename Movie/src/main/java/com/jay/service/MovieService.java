@@ -1,6 +1,7 @@
 package com.jay.service;
 
 import com.jay.common.E3Result;
+import com.jay.po.SelectQuery;
 
 /**
  * created by jaywang on 2019/3/8.
@@ -11,6 +12,16 @@ public interface MovieService {
 
     //搜索电影by id
     E3Result SortMovieByMovieId(int id);
-    
+
+    //分类排序选择每次20部
+    E3Result SortMoiveByCategory(SelectQuery query);
+
+    //判断用户对电影的喜爱
+    int booluserunlikedmovie(int userid, String movieid);
+
+    //用户like的电影
+    void InsertUserFavouriteMoive(SelectQuery selectQuery);
+
+
 
 }

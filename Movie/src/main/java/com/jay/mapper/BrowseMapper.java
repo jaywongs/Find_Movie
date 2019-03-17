@@ -2,6 +2,7 @@ package com.jay.mapper;
 
 import com.jay.po.Browse;
 import com.jay.po.BrowseExample;
+import com.jay.po.SelectQuery;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,9 @@ public interface BrowseMapper {
     int updateByPrimaryKeySelective(Browse record);
 
     int updateByPrimaryKey(Browse record);
+
+    int booluserunlikedmovie(int userid,String movieid);
+
+    int insertuserfavourtemovie(SelectQuery selectquery);
+
 }
