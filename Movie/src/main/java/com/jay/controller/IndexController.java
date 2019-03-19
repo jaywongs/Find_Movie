@@ -3,23 +3,19 @@ package com.jay.controller;
 import com.jay.common.E3Result;
 import com.jay.common.JsonUtils;
 import com.jay.po.*;
-import com.jay.service.CategoryService;
-import com.jay.service.MovieService;
-import com.jay.service.StarService;
+import com.jay.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
+import sun.plugin.services.BrowserService;
 
 import javax.servlet.http.HttpServletRequest;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * created by jaywang on 2019/3/8.
@@ -36,6 +32,13 @@ public class IndexController {
 
     @Autowired
     private CategoryService categoryService;
+
+    @Autowired
+    private ReviewService reviewService;
+
+    @Autowired
+    private BrowseService browseService;
+
     //主页
     @RequestMapping("/")
     public String showHomePage(HttpServletRequest request) {
@@ -118,12 +121,40 @@ public class IndexController {
     }
 
 
-    //选电影界面加载更多按钮(通过类型标签，时序标签以及现有页面呈现的电影数目三个参数查询)
-
+    //加载更多按钮(通过类型标签，时序标签以及现有页面呈现的电影数目三个参数查询)
+    @RequestMapping(value = "/loadingmore", method = RequestMethod.POST)
+    @ResponseBody
+    public E3Result loadMoreMovie(HttpServletRequest request) {
+        //获取更多
+        String sort = request.getParameter("sort");
+        int molimit = Integer.parseInt(request.getParameter("molimit"));
+        int type = Integer.parseInt(request.getParameter("type"));
+        SelectQuery query = new SelectQuery();
+        query.setMovieLimit(molimit);
+        query.setSort(sort);
+        query.setCategoryId(type);
+        E3Result e3Result = movieService.SortMoiveByCategory(query);
+        List<Movie> movies = (List<Movie>) e3Result.getData();
+        return E3Result.ok(movies);
+    }
 
 
     //选择排序电影（类型和时序）
-
+    @RequestMapping(value = "/typesortmovie", method = RequestMethod.POST)
+    @ResponseBody
+    public E3Result showtypesortmovie(HttpServletRequest request) {
+        //获取所有电影数据
+        int type = Integer.parseInt(request.getParameter("type"));
+        int molimit = Integer.parseInt(request.getParameter("molimit"));
+        String sort = request.getParameter("sort");
+        SelectQuery query = new SelectQuery();
+        query.setSort(sort);
+        query.setMovieLimit(molimit);
+        query.setCategoryId(type);
+        E3Result e3Result = movieService.SortMoiveByCategory(query);
+        List<Movie> movies = (List<Movie>) e3Result.getData();
+        return E3Result.ok(movies);
+    }
 
     //电影评星
     @RequestMapping(value = "/getstar", method = RequestMethod.POST)
@@ -177,10 +208,27 @@ public class IndexController {
     }
 
     //点击个人中心按钮
-
+    @RequestMapping(value = "/page/profile", method = RequestMethod.POST)
+    @ResponseBody
+    public String goProfile(HttpServletRequest request) {
+        User user = (User) request.getSession().getAttribute("user");
+        Integer userid = user.getUserid();
+        List<Review> reviews = reviewService.getReviewListByUserId(userid);
+        List<Movie> movies = new ArrayList<>();
+        Browse browse = browseService.getBrowseByUserid(userid);
+        if (browse != null && browse.getMovieids() != null) {
+            String[] movieids = browse.getMovieids().replace(".", "").substring(1).split(",");
+            for (String movieid :movieids) {
+                movies.add(movieService.)
+            }
+        }
+    }
 
     //个人中心按钮
-
+    @RequestMapping("/profile")
+    public String showProfie() {
+        return "profile";
+    }
 
     //搜索电影
 

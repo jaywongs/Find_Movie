@@ -107,7 +107,7 @@
 
 <!-- 导航栏-->
 <nav class="navbar navbar-default" role="navigation" style="background-color: black;margin-bottom: 0%">
-  <a class="navbar-brand" href="/" style="color: white">懂你<img src="/assets/img/title.gif">电影</a>
+  <a class="navbar-brand" href="/" style="color: white">电影<img src="/assets/img/title.png">小站</a>
 
   <div class="col-xs-4">
     <input id="inp-query" class="form-control" style="margin-bottom: 8px;margin-top: 8px;border-radius: 5px;" name="search_text"  maxlength="60" placeholder="搜索电影" value="">

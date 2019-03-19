@@ -349,7 +349,7 @@
       LIMIT #{movieLimit, jdbcType=INTEGER},20;
     </if>
     <if test="category != 0">
-      select * from movie m, movieCategory mc where m.movieid = mc.movieid and mc.categoryid = #{category,jdbcType=INTEGER} order by ${sort} desc
+      select * from movie m, moviecategory mc where m.movieid = mc.movieid and mc.categoryid = #{category,jdbcType=INTEGER} order by ${sort} desc
       LIMIT #{movieLimit, jdbcType=INTEGER},20;
     </if>
   </select>

@@ -60,4 +60,10 @@ public class MovieServiceImpl implements MovieService {
     public void InsertUserFavouriteMoive(SelectQuery selectQuery) {
         browseMapper.insertuserfavourtemovie(selectQuery);
     }
+
+    @Override
+    public Movie getMovieByMovieid(Integer id) {
+        movieMapper.
+        return null;
+    }
 }

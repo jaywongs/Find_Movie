@@ -1,6 +1,7 @@
 package com.jay.service;
 
 import com.jay.common.E3Result;
+import com.jay.po.Movie;
 import com.jay.po.SelectQuery;
 
 /**
@@ -21,6 +22,9 @@ public interface MovieService {
 
     //用户like的电影
     void InsertUserFavouriteMoive(SelectQuery selectQuery);
+
+    //根据userid获取电影
+     Movie getMovieByMovieid(Integer id);
 
 
 
