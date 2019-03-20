@@ -34,4 +34,6 @@ public interface MovieMapper {
 
     List<Movie> selectTopDefaultMovie(int limit);
 
+    List<Movie> selectMovieNameLike(String moviename);
+
 }

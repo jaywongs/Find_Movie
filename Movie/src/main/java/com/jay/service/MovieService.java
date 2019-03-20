@@ -4,6 +4,8 @@ import com.jay.common.E3Result;
 import com.jay.po.Movie;
 import com.jay.po.SelectQuery;
 
+import java.util.List;
+
 /**
  * created by jaywang on 2019/3/8.
  */
@@ -24,7 +26,10 @@ public interface MovieService {
     void InsertUserFavouriteMoive(SelectQuery selectQuery);
 
     //根据userid获取电影
-     Movie getMovieByMovieid(Integer id);
+    Movie getMovieByMovieid(Integer id);
+
+    //根据电影名称获取电影
+    List<Movie> selectMoviesByName(String moviename);
 
 
 

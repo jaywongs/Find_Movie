@@ -353,4 +353,17 @@
       LIMIT #{movieLimit, jdbcType=INTEGER},20;
     </if>
   </select>
+
+  <!--根据电影名称-->
+  <select id="selectMovieNameLike" resultMap="BaseResultMap" parameterType = "java.lang.String">
+    select
+    <include refid="Base_Column_List" />
+    from movie
+    <where>
+      <if test="_parameter != null">
+        moviename like "%"#{moviename}"%"
+      </if>
+    </where>
+    LIMIT 10;
+  </select>
 </mapper>

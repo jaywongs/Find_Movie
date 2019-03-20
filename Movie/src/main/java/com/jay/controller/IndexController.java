@@ -23,7 +23,6 @@ import java.util.*;
 @Controller
 public class IndexController {
 
-
     @Autowired
     private StarService starService;
 
@@ -192,7 +191,7 @@ public class IndexController {
     //电影详情界面点击相似电影
 
 
-    //电影详情界面用户喜欢电影（,id. 格式写入数据库，不存在则插入，存在则更新）
+    //电影详情界面用户收藏电影（,id. 格式写入数据库，不存在则插入，存在则更新）
     @RequestMapping(value = "/likedmovie", method = RequestMethod.POST)
     @ResponseBody
     public String likemovie(HttpServletRequest request) {
@@ -213,15 +212,28 @@ public class IndexController {
     public String goProfile(HttpServletRequest request) {
         User user = (User) request.getSession().getAttribute("user");
         Integer userid = user.getUserid();
+        // 影评的电影list
         List<Review> reviews = reviewService.getReviewListByUserId(userid);
         List<Movie> movies = new ArrayList<>();
+        // 喜欢的电影list
         Browse browse = browseService.getBrowseByUserid(userid);
         if (browse != null && browse.getMovieids() != null) {
             String[] movieids = browse.getMovieids().replace(".", "").substring(1).split(",");
             for (String movieid :movieids) {
-                movies.add(movieService.)
+                Movie movie = movieService.getMovieByMovieid(Integer.parseInt(movieid));
+                if (movie != null)
+                    movies.add(movie);
             }
         }
+        // 为review list中添加电影url
+        for (Review review : reviews) {
+            int movieid = review.getMovieid();
+            review.setPicture(movieService.getMovieByMovieid(movieid).getPicture());
+        }
+        request.getSession().setAttribute("movies", movies);
+        request.getSession().setAttribute("reviews", reviews);
+
+        return "success";
     }
 
     //个人中心按钮
@@ -231,7 +243,19 @@ public class IndexController {
     }
 
     //搜索电影
-
+    @RequestMapping(value = "/search", method = RequestMethod.POST)
+    @ResponseBody
+    public E3Result search(HttpServletRequest request) {
+        String movieName = request.getParameter("search_text");
+        if (movieName == null || movieName == ""){
+            return null;
+        }else {
+            List<Movie> movies = movieService.selectMoviesByName(movieName);
+            System.out.println("正在搜索:"+movieName);
+            E3Result e3Result = E3Result.ok(movies);
+            return e3Result;
+        }
+    }
 }
 
 
