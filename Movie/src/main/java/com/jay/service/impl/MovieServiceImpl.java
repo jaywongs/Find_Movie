@@ -3,7 +3,6 @@ package com.jay.service.impl;
 import com.jay.common.E3Result;
 import com.jay.mapper.BrowseMapper;
 import com.jay.mapper.MovieMapper;
-import com.jay.po.Browse;
 import com.jay.po.Movie;
 import com.jay.po.MovieExample;
 import com.jay.po.SelectQuery;

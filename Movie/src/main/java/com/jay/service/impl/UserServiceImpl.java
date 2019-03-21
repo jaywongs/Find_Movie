@@ -2,13 +2,11 @@ package com.jay.service.impl;
 
 import com.jay.mapper.UserMapper;
 import com.jay.po.User;
-import com.jay.po.UserExample;
 import com.jay.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.DigestUtils;
 
-import java.util.List;
 
 
 /**
