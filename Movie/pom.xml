@@ -200,6 +200,15 @@
                 </includes>
                 <filtering>false</filtering>
             </resource>
+            <!--resource配置文件加入编译后类-->
+            <resource>
+                <directory>src/main/resources</directory>
+                <includes>
+                    <include>**/*.properties</include>
+                    <include>**/*.xml</include>
+                </includes>
+                <filtering>false</filtering>
+            </resource>
         </resources>
         <!-- 资源文件拷贝插件 -->
         <plugins>
