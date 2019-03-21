@@ -222,6 +222,14 @@
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
+            <!--maven编译-->
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <configuration>
+                    <webXml>webapp\WEB-INF\web.xml</webXml>
+                </configuration>
+            </plugin>
         </plugins>
         <finalName>Movie</finalName>
     </build>
