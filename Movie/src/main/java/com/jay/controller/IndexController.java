@@ -181,7 +181,7 @@ public class IndexController {
 
         //立即读取影评显示于前端
         request.getSession().setAttribute("userstar", review);
-        return "评分成功！";
+        return "success";
 
     }
 
