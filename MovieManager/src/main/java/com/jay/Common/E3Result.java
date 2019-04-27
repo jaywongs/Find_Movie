@@ -1,4 +1,4 @@
-package com.jay.Common;
+package com.jay.common;
 
 import com.fasterxml.jackson.databind.JsonNode;
 import com.fasterxml.jackson.databind.ObjectMapper;

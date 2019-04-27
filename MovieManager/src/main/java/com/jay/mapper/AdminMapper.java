@@ -28,4 +28,8 @@ public interface AdminMapper {
     int updateByPrimaryKeySelective(Admin record);
 
     int updateByPrimaryKey(Admin record);
+
+    List<Admin> selectAdminList(Admin admin);
+    Integer selectAdminListCount(Admin admin);
+
 }

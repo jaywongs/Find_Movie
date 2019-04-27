@@ -16,7 +16,7 @@
     <mvc:annotation-driven />
 
     <!--对静态资源放行-->
-    <mvc:resources mapping="/assets/" location="/assets/**" />
+    <mvc:resources mapping="/assets/**" location="/assets/" />
     <mvc:resources mapping="/js/**" location="/js/" />
 
     <mvc:annotation-driven conversion-service="conversionService"></mvc:annotation-driven>

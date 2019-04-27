@@ -1,6 +1,7 @@
 package com.jay.controller;
 
-import com.jay.Common.E3Result;
+import com.jay.common.E3Result;
+import com.jay.service.AdminService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
@@ -20,6 +21,9 @@ import org.springframework.web.bind.annotation.ResponseBody;
 
 @Controller
 public class AdminController {
+
+    @Autowired
+    private AdminService adminService;
 
     @RequestMapping("/")
     public String showLogin() {

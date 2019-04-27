@@ -195,4 +195,7 @@
       role = #{role,jdbcType=INTEGER}
     where adminid = #{adminid,jdbcType=INTEGER}
   </update>
+
+  
+
 </mapper>
