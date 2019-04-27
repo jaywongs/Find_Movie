@@ -39,6 +39,10 @@ public class E3Result implements Serializable {
 
     }
 
+    public static E3Result build(Integer status, String msg) {
+        return new E3Result(status, msg, null);
+    }
+
     public E3Result(Integer status, String msg, Object data) {
         this.status = status;
         this.msg = msg;
