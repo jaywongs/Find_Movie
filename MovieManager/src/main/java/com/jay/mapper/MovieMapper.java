@@ -2,6 +2,7 @@ package com.jay.mapper;
 
 import com.jay.po.Movie;
 import com.jay.po.MovieExample;
+import com.jay.po.Query;
 import org.apache.ibatis.annotations.Param;
 
 import java.util.List;
@@ -28,4 +29,10 @@ public interface MovieMapper {
     int updateByPrimaryKeySelective(Movie record);
 
     int updateByPrimaryKey(Movie record);
+
+    //
+    public Integer movieCount(Query query);
+
+    public List<Movie> selectMovieListByQuery(Query query);
+
 }

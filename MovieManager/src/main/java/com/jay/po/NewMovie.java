@@ -5,7 +5,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 
-public class Movie {
+public class NewMovie {
     private Integer movieid;
 
     private String moviename;
@@ -31,15 +31,11 @@ public class Movie {
 
     private String description;
 
-    private String typelist;
+    private Integer [] categoryid;
 
-    private String backpost;
+    private String categoryname;
 
-    private Integer start;
-
-    private Integer rows;
-
-    public Movie(Integer movieid, String moviename, Date showyear, String nation, String director, String leadactors, String screenwriter, String picture, Double averating, Integer numrating, String description, String typelist, String backpost) {
+    public NewMovie(Integer movieid, String moviename, Date showyear, String nation, String director, String leadactors, String screenwriter, String picture, Double averating, Integer numrating, String description) {
         this.movieid = movieid;
         this.moviename = moviename;
         this.showyear = showyear;
@@ -51,11 +47,9 @@ public class Movie {
         this.averating = averating;
         this.numrating = numrating;
         this.description = description;
-        this.typelist = typelist;
-        this.backpost = backpost;
     }
 
-    public Movie() {
+    public NewMovie() {
         super();
     }
 
@@ -145,21 +139,5 @@ public class Movie {
 
     public void setDescription(String description) {
         this.description = description == null ? null : description.trim();
-    }
-
-    public String getTypelist() {
-        return typelist;
-    }
-
-    public void setTypelist(String typelist) {
-        this.typelist = typelist == null ? null : typelist.trim();
-    }
-
-    public String getBackpost() {
-        return backpost;
-    }
-
-    public void setBackpost(String backpost) {
-        this.backpost = backpost == null ? null : backpost.trim();
     }
 }

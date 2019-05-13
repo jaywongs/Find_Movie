@@ -1,11 +1,17 @@
 package com.jay.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class Movie {
     private Integer movieid;
 
     private String moviename;
+
+    @JsonFormat(pattern = "yyyy-MM-dd", timezone = "GMT+8")
+    @DateTimeFormat(pattern = "yyyy-MM-dd")
 
     private Date showyear;
 
@@ -28,6 +34,10 @@ public class Movie {
     private String typelist;
 
     private String backpost;
+
+    private Integer start;
+
+    private Integer rows;
 
     public Movie(Integer movieid, String moviename, Date showyear, String nation, String director, String leadactors, String screenwriter, String picture, Double averating, Integer numrating, String description, String typelist, String backpost) {
         this.movieid = movieid;
