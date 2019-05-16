@@ -110,7 +110,8 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.jay.po.Movie">
+  <!--使用useGeneratedKeys 自增主键 添加movieid-->
+  <insert id="insert" parameterType="com.jay.po.Movie" useGeneratedKeys="true" keyProperty="movieid">
     insert into movie (movieid, moviename, showyear, 
       nation, director, leadactors, 
       screenwriter, picture, averating, 
@@ -337,29 +338,31 @@
       backpost = #{backpost,jdbcType=VARCHAR}
     where movieid = #{movieid,jdbcType=INTEGER}
   </update>
-  <select id="movieCount" parameterType="Query" resultMap="Integer">
+  <select id="movieCount" parameterType="Query"
+          resultType="Integer">
     select count(1) from movie
     <where>
       <if test="movieName != null and movieName != ''">
         moviename like "%"#{movieName}"%"
       </if>
       <if test="categoryId != 0">
-        and movieid in (select movieid from moviecategory where categoryid=#{categoryId})
+        and movieid  IN (select movieid from moviecategory where categoryid=#{categoryId})
       </if>
     </where>
   </select>
 
-  <select id="selectMovieListByQuery" parameterType="Query" resultMap="Movie">
+  <select id="selectMovieListByQuery" parameterType="Query"
+          resultType="Movie">
     select * from movie
     <where>
       <if test="movieName != null and movieName != ''">
         moviename like "%"#{movieName}"%"
       </if>
       <if test="categoryId != 0">
-        and movieid in (select movieid from moviecategory where categoryid=#{categoryid})
+        and movieid  IN (select movieid from moviecategory where categoryid=#{categoryId})
       </if>
     </where>
-    limit #{startRow}, #{size}
+    limit #{startRow},#{size}
   </select>
 
 </mapper>

@@ -9,6 +9,18 @@ public class Admin {
 
     private Integer role;
 
+    private Integer start;
+
+    private Integer rows;
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
+
     public Admin(Integer adminid, String adminname, String adminpassword, Integer role) {
         this.adminid = adminid;
         this.adminname = adminname;
@@ -50,5 +62,13 @@ public class Admin {
 
     public void setRole(Integer role) {
         this.role = role;
+    }
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
     }
 }

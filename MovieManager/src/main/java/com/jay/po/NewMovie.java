@@ -35,6 +35,22 @@ public class NewMovie {
 
     private String categoryname;
 
+    public Integer[] getCategoryid() {
+        return categoryid;
+    }
+
+    public void setCategoryid(Integer[] categoryid) {
+        this.categoryid = categoryid;
+    }
+
+    public String getCategoryname() {
+        return categoryname;
+    }
+
+    public void setCategoryname(String categoryname) {
+        this.categoryname = categoryname;
+    }
+
     public NewMovie(Integer movieid, String moviename, Date showyear, String nation, String director, String leadactors, String screenwriter, String picture, Double averating, Integer numrating, String description) {
         this.movieid = movieid;
         this.moviename = moviename;

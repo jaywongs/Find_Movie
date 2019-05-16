@@ -4,8 +4,8 @@ import com.jay.common.Page;
 import com.jay.po.Category;
 import com.jay.po.Movie;
 import com.jay.po.NewMovie;
+import com.jay.po.Query;
 
-import javax.management.Query;
 import java.util.List;
 
 /**

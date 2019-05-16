@@ -227,4 +227,23 @@
       email = #{email,jdbcType=VARCHAR}
     where userid = #{userid,jdbcType=INTEGER}
   </update>
+  <sql id="selectUserListWhere">
+    <where>
+      <if test="username != null" >
+        username like "%"#{username}"%"
+      </if>
+    </where>
+  </sql>
+  <select id="selectUserList" parameterType="user" resultType="user">
+    select userid, username, password,registertime, lastlogintime, email
+    from user
+    <include refid="selectUserListWhere" />
+    <if test="start != null and rows != null">
+      limit #{start}, #{rows}
+    </if>
+  </select>
+  <select id="selectUserListCount" parameterType="user" resultType="int">
+    select count(*) from user 
+    <include refid="selectUserListWhere" />
+  </select>
 </mapper>

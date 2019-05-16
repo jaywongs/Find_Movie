@@ -1,11 +1,14 @@
 package com.jay.controller;
 
 import com.jay.common.E3Result;
+import com.jay.common.Page;
+import com.jay.po.Admin;
 import com.jay.service.AdminService;
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.IncorrectCredentialsException;
 import org.apache.shiro.authc.UnknownAccountException;
 import org.apache.shiro.authc.UsernamePasswordToken;
+import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.apache.shiro.subject.Subject;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -50,6 +53,41 @@ public class AdminController {
         return E3Result.ok();
     }
 
+    @RequestMapping(value = "/admin/list")
+    @RequiresRoles("admin")
+    public String getAdminList(@RequestParam(defaultValue = "1")Integer page, @RequestParam(defaultValue = "10")Integer rows, String adminname, Model model){
+        Page<Admin> admins = adminService.findAdminList(page, rows, adminname);
+        model.addAttribute("page", admins);
+        model.addAttribute("adminname", adminname);
+        return "adminManage";
+    }
 
+    @RequestMapping("/admin/add")
+    @ResponseBody
+    public String addAdmin(Admin admin) {
+        adminService.addAdmin(admin);
+        return "OK";
+    }
+
+    @RequestMapping("/admin/delete")
+    @ResponseBody
+    public String deleteAdmin(Integer id){
+        adminService.deleteAdmin(id);
+        return "OK";
+    }
+
+    @RequestMapping("/admin/update")
+    @ResponseBody
+    public String updateAdmin(Admin admin) {
+        adminService.updateAdmin(admin);
+        return "OK";
+    }
+
+    @RequestMapping("/admin/edit")
+    @ResponseBody
+    public Admin getAdminById(Integer id) {
+        Admin admin = adminService.getAdminById(id);
+        return admin;
+    }
 
 }

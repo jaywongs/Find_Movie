@@ -1,5 +1,8 @@
 package com.jay.po;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.util.Date;
 
 public class User {
@@ -9,11 +12,35 @@ public class User {
 
     private String password;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date registertime;
 
+    @JsonFormat(pattern="yyyy-MM-dd",timezone = "GMT+8")
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date lastlogintime;
 
     private String email;
+
+    private Integer start;
+
+    private Integer rows;
+
+    public Integer getStart() {
+        return start;
+    }
+
+    public void setStart(Integer start) {
+        this.start = start;
+    }
+
+    public Integer getRows() {
+        return rows;
+    }
+
+    public void setRows(Integer rows) {
+        this.rows = rows;
+    }
 
     public User(Integer userid, String username, String password, Date registertime, Date lastlogintime, String email) {
         this.userid = userid;
